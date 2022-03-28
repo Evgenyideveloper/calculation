@@ -7,4 +7,4 @@ let adaptive;
 
 
 alert('привет мир');
-console.log('обучение началось');
+console.log('создал ветку dev');
