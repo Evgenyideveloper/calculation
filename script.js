@@ -23,7 +23,7 @@ const showTypeOf = function (variable){
 	console.log(variable, typeof variable);
 }
 
-const getFullPrice = function(){
+function getFullPrice(){
 	return screenPrice + allServicePrices;
 }
 
@@ -32,14 +32,10 @@ const getServicePercentPrices = function(){
 }
 
 const getTitle = () =>{
-	let splitted = title.trim().toLowerCase().split("");
-	const first = splitted[0].toUpperCase();	
-	splitted.splice(0, 1);	
-	const result = [ ...first, ...splitted];	
-	return title = result.join("");	
+	return title.trim()[0].toUpperCase() + title.trim().substr(1).toLowerCase();
 }
 
-const getRollbackMessage = (price) =>{
+const getRollbackMessag = (price) =>{
 	if(price > 30000){	
 		return "Даем скидку в 10%";
 	}else if(price <= 30000 && price > 15000){
@@ -56,9 +52,11 @@ fullPrice = getFullPrice();
 servicePercentPrice = getServicePercentPrices();
 title = getTitle();
 
+
 showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
 console.log(fullPrice);
-console.log(servicePercentPrice);
+console.log(getRollbackMessag(fullPrice));
+
