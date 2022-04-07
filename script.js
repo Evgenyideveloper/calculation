@@ -17,7 +17,7 @@ const checkNumber = (number) =>{
 
 const toAsk = () =>{
 	title = prompt('Как называется ваш проект?', 'Калькулятор верстки');
-	let screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Cложные , Интерактивные');
+	screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Cложные , Интерактивные');
 	
 	do {
 		screenPrice = +prompt('Сколько это будет стоить?');
@@ -27,22 +27,25 @@ const toAsk = () =>{
 }
 
 const getAllServicePrices = () =>{
-	let cena = 0;
+	let num = 0;
 	
 	for(let i = 1;i <= 2;i++){
 		let price = 0;
+			
 		
-		if(i === 1 && checkNumber(price) !== undefined){
-			service1 = prompt('Какой дополнительный тип услуги нужен?');		
-			price = +prompt('Сколько это будет стоить?');
-					
-		}if(i === 2 && checkNumber(price) !== undefined){
+		if(i === 1){		
+			service1 = prompt('Какой дополнительный тип услуги нужен?');				
+		}if(i === 2){
 			service2 = prompt('Какой дополнительный тип услуги нужен?')			
-			price = +prompt('Сколько это будет стоить?');			
-		}		
-		cena = cena + price; 
+			}
+	do {
+		price = +prompt('Сколько это будет стоить?');
+	}while(!checkNumber(price)); 
+		 
+	
+		num = num + price; 
 	}
-	return cena;
+	return num;
 }
 
 const showTypeOf = function (variable){
@@ -52,6 +55,7 @@ const showTypeOf = function (variable){
 const getFullPrice = function(){
 	return +screenPrice + allServicePrices;
 }
+
 
 const getServicePercentPrices = function(){
 	return fullPrice - (fullPrice * (rollback / 100))
