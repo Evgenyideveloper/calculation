@@ -1,36 +1,17 @@
 let title = document.getElementsByTagName('h1')[0];
-console.log(title);
-
-let resetButtons = document.getElementsByClassName('handler_btn');
-console.log(resetButtons);
-
+let calculateButton = document.getElementsByClassName('handler_btn')[0];
+let resetButton = document.getElementsByClassName('handler_btn')[1];
 let buttonPlus = document.querySelector('.screen-btn');
 let buttonsPercent = document.querySelectorAll('.other-items.percent');
 let buttonsNumber = document.querySelectorAll('.other-items.number');
-console.log(buttonsPercent);
-console.log(buttonsNumber);
-
-
 let rollbackInput = document.querySelector('.rollback input');
 let rollbackRange = document.querySelector('.rollback .range-value');
-
-console.log(rollbackInput);
-console.log(rollbackRange);
-
-let totalInput = document.getElementsByClassName('total-input')[0];
-let totalInput1 = document.getElementsByClassName('total-input')[1];
-let totalInput2 = document.getElementsByClassName('total-input')[2];
-let totalInput3 = document.getElementsByClassName('total-input')[3];
-let totalInput4 = document.getElementsByClassName('total-input')[4];
-
-
-console.log(totalInput);
-
+let totalLayout = document.getElementsByClassName('total-input')[0];
+let totalScreens = document.getElementsByClassName('total-input')[1];
+let totalServices = document.getElementsByClassName('total-input')[2];
+let totaResult = document.getElementsByClassName('total-input')[3];
+let totalRollback = document.getElementsByClassName('total-input')[4];
 let screens = document.querySelectorAll('.screen');
-
-console.log(screens);
-
-
 
 const appData = {
 	title: '',
