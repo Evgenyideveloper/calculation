@@ -67,17 +67,18 @@ const appData = {
 			const select = item.querySelector('select');
 			const input = item.querySelector('input');
 			const selectName = select.options[select.selectedIndex].textContent;
-				if(select.value == '' || input.value == ''){
+				if(select.value !== '' && input.value !== ''){
 					alert('необходимо выбрать тип экрана и заполнить их колличество')
+				  appData.screens.push({
+					id: index,
+					name: selectName,
+					price: +select.value * +input.value,
+					count: +input.value
+				  });
+				} else {
+				  appData.screens.splice(0);
 				}
-			appData.screens.push({
-				id: index,
-				name: selectName,
-				price: +select.value * +input.value,
-				count: +input.value
-			});
-					
-				
+								
 		})	
 			console.log(appData.screens);	
 	},
@@ -109,6 +110,7 @@ const appData = {
 	
 	addScreenBlock: function(){
 		const cloneScreen = screens[0].cloneNode(true);
+		cloneScreen.querySelector('input').value = '';
 		screens[screens.length - 1].after(cloneScreen);
 		
 	},	
