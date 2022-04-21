@@ -68,7 +68,7 @@ const appData = {
 			const input = item.querySelector('input');
 			const selectName = select.options[select.selectedIndex].textContent;
 				if(select.value !== '' && input.value !== ''){
-					alert('необходимо выбрать тип экрана и заполнить их колличество')
+					
 				  appData.screens.push({
 					id: index,
 					name: selectName,
@@ -109,7 +109,9 @@ const appData = {
 	},
 	
 	addScreenBlock: function(){
+		screens = document.querySelectorAll('.screen');
 		const cloneScreen = screens[0].cloneNode(true);
+		
 		cloneScreen.querySelector('input').value = '';
 		screens[screens.length - 1].after(cloneScreen);
 		
