@@ -89,7 +89,8 @@ const appData = {
 		
 		inputRange.disabled = false;
 		inputRange.value = 0;
-		//inputRangeValue = inputRange.value;
+		
+		inputRangeValue.innerHTML = inputRange.value + '%';
 		buttonPlus.disabled = false;
 		
 		let select = document.querySelectorAll('select');
@@ -104,11 +105,22 @@ const appData = {
             elem.disabled = false;
         });	
 
-		/* for (let i = select.length - 1; i > 0; i--) {
-            select[0].parentNode.removeChild(select[i]);
-        } */
-         
-		
+		screens = document.querySelectorAll('.screen');
+
+		for(let i = 1; i < screens.length; i++) {
+		  if (i !== 0) {
+			screens[i].parentElement.removeChild(screens[i]);
+		  } 
+		}
+
+		screens.forEach((screen) => {
+		  const select = screen.querySelector('select');
+		  const input = screen.querySelector('input');
+		  select.disabled = false;
+		  input.disabled = false;
+		  select.value = '';
+		  input.value = '';
+		});
 	},
 	
 	showResult: function(){
