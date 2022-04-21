@@ -1,3 +1,5 @@
+'use strict';
+
 let title = document.getElementsByTagName('h1')[0];
 let buttonPlus = document.querySelector('.screen-btn');
 let otherItemsPercent = document.querySelectorAll('.other-items.percent');
@@ -31,17 +33,18 @@ const appData = {
 	servicesNumber: {},
 	
 	init: function(){
-		appData.addTitle();
-		startBtn.addEventListener('click', appData.start)
-		buttonPlus.addEventListener('click', appData.addScreenBlock)
-		inputRange.addEventListener('input', appData.inputRangeRollback)
+		this.addTitle();
+		startBtn.addEventListener('click', this.start)
+		resetBtn.addEventListener('click', this.reset)
+		buttonPlus.addEventListener('click', this.addScreenBlock)
+		inputRange.addEventListener('input', this.inputRangeRollback)
 	},
-	addTitle: function(){
+	addTitle:() =>{
 		document.title = title.textContent;	
 	},
-	inputRangeRollback:function(){
+	inputRangeRollback:() =>{
 		inputRangeValue.innerHTML = inputRange.value + '%';
-		appData.rollback = inputRange.value;
+		this.rollback = inputRange.value;
 		
 	},	
 	start: function(){		
@@ -52,31 +55,86 @@ const appData = {
 			
 		appData.getServicePercentPrices();			
 		appData.showResult();
+		
+		///////////////////////
+		
+		startBtn.disabled = true;
+        startBtn.style.display = 'none';
+        
+        resetBtn.disabled = false;
+        resetBtn.style.display = 'block';		
+		
+		inputRange.disabled = true;
+		buttonPlus.disabled = true;
+		
+		let select = document.querySelectorAll('select');
+        let inputText = document.querySelectorAll("input[type='text']");
+
+        inputText.forEach(function (elem) {
+            elem.disabled = true;
+        });
+		
+		select.forEach(function (elem) {
+            elem.disabled = true;
+        });		
+		
 	},
+	
+	reset: function(){		
+		startBtn.disabled = false;
+        startBtn.style.display = 'block';
+        
+        resetBtn.disabled = true;
+        resetBtn.style.display = 'none';		
+		
+		inputRange.disabled = false;
+		inputRange.value = 0;
+		//inputRangeValue = inputRange.value;
+		buttonPlus.disabled = false;
+		
+		let select = document.querySelectorAll('select');
+        let inputText = document.querySelectorAll("input[type='text']");
+
+        inputText.forEach(function (elem) {
+            elem.disabled = false;
+            elem.value = '';
+        });
+		
+		select.forEach(function (elem) {
+            elem.disabled = false;
+        });	
+
+		/* for (let i = select.length - 1; i > 0; i--) {
+            select[0].parentNode.removeChild(select[i]);
+        } */
+         
+		
+	},
+	
 	showResult: function(){
-		total.value = appData.screenPrice;
-		totalCount.value = appData.servicePricesPercent + appData.servicePricesNumber;
-		totalCountOther.value = appData.fullPrice;
-		totalCountRollback.value = appData.servicePercentPrice;
-		totalCount.value = appData.count;
+		total.value = this.screenPrice;
+		totalCount.value = this.servicePricesPercent + appData.servicePricesNumber;
+		totalCountOther.value = this.fullPrice;
+		totalCountRollback.value = this.servicePercentPrice;
+		totalCount.value = this.count;
 	},
 	
 	addScreens: function(){
 		screens = document.querySelectorAll('.screen');
-		screens.forEach(function(item, index){
+		screens.forEach((item, index)=>{
 			const select = item.querySelector('select');
 			const input = item.querySelector('input');
 			const selectName = select.options[select.selectedIndex].textContent;
 				if(select.value !== '' && input.value !== ''){
 					
-				  appData.screens.push({
+				  this.screens.push({
 					id: index,
 					name: selectName,
 					price: +select.value * +input.value,
 					count: +input.value
 				  });
 				} else {
-				  appData.screens.splice(0);
+				  this.screens.splice(0);
 				}
 								
 		})	
@@ -84,24 +142,24 @@ const appData = {
 	},
 	
 	addServices: function(){
-		otherItemsPercent.forEach(function(item){
+		otherItemsPercent.forEach((item)=>{
 			const check = item.querySelector('input[type=checkbox]');
 			const label = item.querySelector('label');
 			const input = item.querySelector('input[type=text]');
 			
 			if(check.checked){
-				appData.servicesPercent[label.textContent] = +input.value;		
+				this.servicesPercent[label.textContent] = +input.value;		
 			}
 			
 		}); 
 		
-		otherItemsNumber.forEach(function(item){
+		otherItemsNumber.forEach((item)=>{
 			const check = item.querySelector('input[type=checkbox]');
 			const label = item.querySelector('label');
 			const input = item.querySelector('input[type=text]');
 			
 			if(check.checked){
-				appData.servicesNumber[label.textContent] = +input.value;		
+				this.servicesNumber[label.textContent] = +input.value;		
 			}
 			
 		}); 
@@ -118,26 +176,26 @@ const appData = {
 	},	
 	
 	addPrices: function(){
-		for(let screen of appData.screens){
-			appData.screenPrice += screen.price
+		for(let screen of this.screens){
+			this.screenPrice += screen.price
 		}
 		
-		for(let key in appData.servicesNumber){
-			appData.servicePricesNumber += appData.servicesNumber[key];
+		for(let key in this.servicesNumber){
+			this.servicePricesNumber += this.servicesNumber[key];
 		}
 		
-		for(let key in appData.servicesPercent){
-			appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key] / 100);
+		for(let key in this.servicesPercent){
+			this.servicePricesPercent += this.screenPrice * (this.servicesPercent[key] / 100);
 		}
-		appData.fullPrice =  +appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
+		this.fullPrice =  +this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
 		
-		appData.getServicePercentPrices = function(){
-			appData.servicePercentPrice =  appData.fullPrice - (appData.fullPrice * (appData.rollback / 100))				
+		this.getServicePercentPrices = () =>{
+			this.servicePercentPrice =  this.fullPrice - (this.fullPrice * (this.rollback / 100))				
 			
 		} 
 		
 		let initial = 0;
-        appData.count = appData.screens.reduce((a, b) => {
+        this.count = this.screens.reduce((a, b) => {
             return a + b.count;
         }, initial); 
 	},
